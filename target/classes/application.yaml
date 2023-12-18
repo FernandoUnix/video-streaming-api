@@ -1,0 +1,27 @@
+spring:
+  data:
+    mongodb:
+      database: video-streaming
+      port: 27017
+      host: localhost
+      password: admin
+      username: admin
+      authentication-database : admin
+  servlet:
+    multipart:
+      max-file-size: 10000MB #10GB
+      max-request-size: 10000MB #10GB
+
+minio:
+  url: http://localhost:9000
+  username: admin
+  password: adminpass
+  put-object-part-size: 5242880 #value in bytes (minimum is 5 MB equivalent)
+
+app:
+  streaming:
+    default-chunk-size: 3145728 #value in bytes
+
+server:
+  servlet:
+    context-path: /api

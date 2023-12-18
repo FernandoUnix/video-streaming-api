@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chunked Upload with Progress</title>
+</head>
+<body>
+    <input type="file" id="videoInput" accept="video/mp4">
+    <label> 
+  	Id:
+    <input type="text" id="id"  >
+    </label>
+    <button onclick="uploadVideo()">Upload</button>
+    <button onclick="pauseUpload()">Pausar</button>
+    <button onclick="resumeUpload()">Continuar</button>
+    <button onclick="cancelUpload()">Cancelar</button>
+    <div id="progressContainer" style="margin-top: 10px;">
+        <progress id="uploadProgress" max="100" value="0"></progress>
+        <span id="progressText">0%</span>
+    </div>
+
+    <script>
+        let uploadController;
+
+        async function uploadVideo() {
+            const fileInput = document.getElementById('videoInput');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert('Selecione um vídeo para upload.');
+                return;
+            }
+
+            const chunkSize = 1024 * 1024; // Tamanho do chunk (1MB neste exemplo)
+            const totalChunks = Math.ceil(file.size / chunkSize);
+
+            uploadController = new AbortController();
+
+            for (let chunkNumber = 1; chunkNumber <= totalChunks; chunkNumber++) {
+                if (uploadController.signal.aborted) {
+                    console.log('Upload cancelado.');
+                    return;
+                }
+
+                const start = (chunkNumber - 1) * chunkSize;
+                const end = Math.min(chunkNumber * chunkSize, file.size);
+                const chunk = file.slice(start, end);
+
+                const formData = new FormData();
+                formData.append('file', chunk);
+                formData.append('type', file.type);
+                formData.append('id', document.getElementById('id').value);
+                formData.append('chunkNumber', chunkNumber);
+                formData.append('totalChunks', totalChunks);
+
+                try {
+                    const response = await fetch('http://localhost:8080/api/v1/videos/upload-file', {
+                        method: 'POST',
+                        body: formData,
+                        signal: uploadController.signal
+                    });
+
+                   // const result = await response.json();
+                    console.log(response.status);
+
+                    // Atualiza o progresso
+                    const progress = (chunkNumber / totalChunks) * 100;
+                    updateProgress(progress);
+                } catch (error) {
+                    console.error('Erro durante o upload:', error);
+                    // Lidar com erros durante o upload
+                }
+            }
+
+            console.log('Upload concluído!');
+        }
+
+        function pauseUpload() {
+            if (uploadController) {
+                uploadController.abort();
+                uploadController = null;
+                console.log('Upload pausado.');
+            }
+        }
+
+        function resumeUpload() {
+            if (!uploadController) {
+                uploadController = new AbortController();
+                console.log('Upload retomado.');
+                uploadVideo();
+            }
+        }
+
+        function cancelUpload() {
+            if (uploadController) {
+                uploadController.abort();
+                uploadController = null;
+                console.log('Upload cancelado.');
+            }
+        }
+
+        function updateProgress(progress) {
+            const progressText = document.getElementById('progressText');
+            const uploadProgress = document.getElementById('uploadProgress');
+
+            progressText.innerText = `${progress.toFixed(2)}%`;
+            uploadProgress.value = progress;
+        }
+    </script>
+</body>
+</html>
+
