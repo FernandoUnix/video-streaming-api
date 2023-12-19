@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/genres")
-public class GenreController {
+public class GenreController { //TODO we need add test to this controller
 
     @GetMapping()
     public List<String> getGenres() {

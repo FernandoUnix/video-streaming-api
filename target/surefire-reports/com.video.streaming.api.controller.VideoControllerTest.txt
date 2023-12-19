@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.video.streaming.api.controller.VideoControllerTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.489 s -- in com.video.streaming.api.controller.VideoControllerTest

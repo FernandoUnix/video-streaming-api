@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/engagement-statistic")
-public class EngagementStatisticController {
+public class EngagementStatisticController { //TODO we need add test to this controller
 
     @Autowired
     EngagementStatisticRepository engagementStatisticRepository;

@@ -1,0 +1,157 @@
+{
+	"info": {
+		"_postman_id": "3bbec8e9-32ba-4976-a48e-3ce2428a706f",
+		"name": "Video Streaming",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1901548"
+	},
+	"item": [
+		{
+			"name": "V1",
+			"item": [
+				{
+					"name": "GET genres",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/genres",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"genres"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create metadata",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "video",
+									"type": "file",
+									"src": "/home/fernando/Downloads/OPEX_EPISODIO_1069_720.mp4"
+								},
+								{
+									"key": "model",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/videos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"videos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update metadata",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \"title\":\"Test 1\",\n    \"synopsis\":\"\",\n    \"director\":\"\",\n    \"cast\": {\n        \"Fernando\":\"Amaro\",\n        \"Rafael\" : \"Eduardo\"\n    },\n    \"yearOfRelease\":\"\",\n    \"genre\" : [\"FANTASY\", \"COMEDY\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/videos/18f3ff4b-9b92-459f-b907-4be0b85dbaa5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"videos",
+								"18f3ff4b-9b92-459f-b907-4be0b85dbaa5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all videos",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get Video",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/videos/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"videos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete video",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/videos/6d3f2174-967b-4d74-9d58-f1dde0d716c6",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"videos",
+								"6d3f2174-967b-4d74-9d58-f1dde0d716c6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET engagement-statistic",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

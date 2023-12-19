@@ -93,7 +93,7 @@ public class VideoController {
         }
     }
 
-    @DeleteMapping("/delete/{uuid}")
+    @DeleteMapping("/{uuid}")
     public ResponseEntity<String> deleteVideo(@PathVariable UUID uuid) {
 
         try {
@@ -114,7 +114,7 @@ public class VideoController {
             Range parsedRange = Range.parseHttpRangeString(range, defaultChunkSize);
             VideoServiceImpl.ChunkWithMetadata chunkWithMetadata = videoService.fetchChunk(uuid, parsedRange);
 
-            if (range == null) { // Logic to add views
+            if (range == null) { //TODO, we need to add Logic to add views, now we are just checking if it's the beginning of the video
                 engagementStatisticService.addViews(UserMock.USER_LOGGED_ID, uuid);
             }
 

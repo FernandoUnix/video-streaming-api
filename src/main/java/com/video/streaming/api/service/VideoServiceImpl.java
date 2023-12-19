@@ -85,9 +85,11 @@ public class VideoServiceImpl implements VideoService {
         try {
             FileMetadata metadata = fileMetadataRepository.findByIdAndIsDeletedFalse(id).get();
             metadata.setDeleted(true); // Soft Delete
+
+            fileMetadataRepository.save(metadata);
         } catch (Exception ex) {
-            log.error("Exception occurred when trying to delete the file", ex);
-            throw new RuntimeException(ex);
+            log.error(ex.getMessage());
+            throw new RuntimeException("Exception occurred when trying to delete the file");
         }
     }
 
